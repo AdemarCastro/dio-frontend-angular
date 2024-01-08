@@ -1,0 +1,1 @@
+// Divisão de Responsabilidade - Encapsulação
