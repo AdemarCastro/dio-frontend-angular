@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+</head>
+<body>
+    <h1>Teste</h1>
+
+    <button id="btnTeste" type="button">
+        Teste
+    </button>
+
+    <script>
+
+        // window é o objeto que representa o nosso browser
+        // document é o documento corrent -> o html atual
+        // Através do Javascript vamos dar Comportamento a nossa página HTML
+
+        const btnTeste = document.getElementById("btnTeste");
+        
+        btnTeste.addEventListener("click", function () {
+            console.log('Clicou no botão!');
+        });
+
+    </script>
+</body>
+</html>
