@@ -20,18 +20,21 @@ function convertPokemonToLi(pokemon) {
     `
 }
 
-fetch(url) // -> A interface de um Promisse foi baseada em um processo (Try | Catch | Finally)
-    // É uma função especial - Não tem contexto - Normalmente Callback e contextos isolados
-    .then((response) => response.json()) // Apenas uma linha
-    .then((jsonBody) => jsonBody.results)
-    .then((pokemonList) => {
+const pokemonList = document.getElementById('pokemonList');
 
-        for (let i = 0; i < pokemonList.lenght; i++) {
-            const pokemon = pokemonList(i);
-            console.log(convertPokemonToLi(pokemon));
-        }
-    })
-    .catch((error) => console.error(error))
+pokeApi.getPokemons().then((pokemons = []) => {
+    pokemonList.innerHTML += pokemons.map(convertPokemonToLi).join('');
+})
+.catch((error) => console.error(error));
+
+Promise.all([
+    fetch('https://pokeapi.co/api/v2/pokemon/1'),
+    fetch('https://pokeapi.co/api/v2/pokemon/2'),
+    fetch('https://pokeapi.co/api/v2/pokemon/3'),
+    fetch('https://pokeapi.co/api/v2/pokemon/4')
+]).then((results) => {
+    console.log(results);
+})
 
 // O que é Promise -> Uma Promise (promessa) é um objeto em JavaScript que representa a eventual conclusão ou falha de uma operação assíncrona.
 
