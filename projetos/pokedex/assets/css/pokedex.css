@@ -25,16 +25,16 @@
 .dragon { background-color: #6f38f6 }
 .fairy { background-color: #f9aec7 }
 
+
 .pokemon {
+    /*background-color: #14A06F;*/
+    color: #FFF;
     display: flex;
     flex-direction: column;
     margin: .5rem;
     padding: 1rem;
     border-radius: 1rem;
-    background-color: #14A06F;
-    color: #FFF;
 }
-
 .pokemon .number {
     color: #000;
     opacity: .3;
@@ -61,12 +61,14 @@
 }
 
 .pokemon .detail .types .type {
-    background-color: #61e1ca;
+    /*background-color: #61e1ca;*/
     color: #FFF;
     padding: .25rem .5rem;
     margin: .25rem 0;
     font-size: .625rem;
     border-radius: 1rem;
+    filter: brightness(1.1);
+    text-align: center;
 }
 
 .pokemon .detail img {
@@ -74,10 +76,45 @@
     height: 90px;
 }
 
+.pagination {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+}
+
+.pagination button {
+    color: #fff;
+    background-color: #6c79db;
+    border: none;
+    border-radius: 1rem;
+    padding: .25rem .5rem;
+    margin: .25rem 0;
+    font-size: .625rem;
+}
+
+/* Efeito de sobreposição do mouse no button */
+.pagination button:hover {
+    background-color: #363b7f;
+}
+
+/* Efeito de clique do mouse no button */
+.pagination button.clicked {
+    animation: clickAnimation 0.5s ease-out;
+}
+
+@keyframes clickAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
 /* Estilização para outras Telas */
-@media screen and (min-width: 380px) {
+@media screen and (min-width: 431px) {
     .content {
-        max-width: 380px;
+        max-width: 431px;
         margin: 0 auto;
     }
 

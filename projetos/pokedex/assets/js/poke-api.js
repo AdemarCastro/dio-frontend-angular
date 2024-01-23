@@ -32,3 +32,19 @@ pokeApi.getPokemons = (offset = 0, limit = 10) => {
         .then((pokemonsDetails) => pokemonsDetails)
 }
 
+// Método para animar button
+document.getElementById('loadMoreButton').addEventListener('click', function() {
+    this.classList.add('clicked');
+
+    // Reproduzir som de Notificação
+    const clickSound = document.getElementById('clickSound');
+    if (clickSound) {
+        clickSound.play();
+    }
+
+    setTimeout(() => {
+        this.classList.remove('clicked');
+    }, 200);
+});
+
+
