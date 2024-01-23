@@ -1,5 +1,7 @@
 const pokemonList = document.getElementById('pokemonList');
 const loadMoreButton = document.getElementById('loadMoreButton');
+
+const maxRecords = 151;
 const limit = 5;
 let offset = 0;
 
@@ -14,23 +16,6 @@ function firstCharacterCapitalized(pokemon) {
 }
 
 function loadPokemonItens(offset, limit) {
-    // function convertPokemonToLi(pokemon) {
-    //     return `
-    //     <li class="pokemon ${pokemon.type}">
-    //         <span class="number">#${pokemon.number}</span>
-    //         <span class="name">${firstCharacterCapitalized(pokemon)}</span>
-    //
-    //         <div class="detail">
-    //             <ol class="types">
-    //                 ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
-    //             </ol>
-    //
-    //             <img src="${pokemon.photo}" alt="${firstCharacterCapitalized(pokemon)}">
-    //         </div>
-    //     </li>
-    // `
-    // }
-
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
         const newHtml = pokemons.map((pokemon) => `
            <li class="pokemon ${pokemon.type}">
@@ -54,7 +39,18 @@ loadPokemonItens(offset, limit)
 
 loadMoreButton.addEventListener('click', () => {
     offset += limit;
-    loadPokemonItens(offset, limit);
+    const qtdRecordNextPage = offset + limit;
+
+    // Criando mecanismo de paginação
+    if (qtdRecordNextPage >= maxRecords) {
+        const newLimit = maxRecords - offset;
+        loadPokemonItens(offset, newLimit);
+
+        // Remover button
+        loadMoreButton.parentElement.removeChild(loadMoreButton);
+    } else {
+        loadPokemonItens(offset, limit);
+    }
 })
 
 // O que é Promise -> Uma Promise (promessa) é um objeto em JavaScript que representa a eventual conclusão ou falha de uma operação assíncrona.
@@ -76,3 +72,14 @@ loadMoreButton.addEventListener('click', () => {
 // * Não Bloqueante: Em operações assíncronas, o código continua a ser executado mesmo enquanto uma operação está em andamento. Isso permite que outras operações sejam realizadas sem esperar que a operação assíncrona seja concluída.
 
 // * Callback, Promises ou Async/Await: Para lidar com operações assíncronas, você pode usar callbacks (antiga abordagem), Promises ou a sintaxe mais moderna Async/Await.
+
+// ******** PROVA ********
+
+// 1) Para que serve uma API ou um WebService?
+//     { Serve para que sistemas interajam, manipulem e troquem dados e informações. }
+// 2) Para que serve o Status Code de uma requisição?
+//     { O código de status HTTP indica para o cliente qual a condição atual sobre o processamento de sua requisição. }
+// 3) O que é query string de uma requisição?
+//     { É uma forma de passagem de parâmetros para uma requisição. }
+// 4) Para que serve os Headers de uma requisição?
+//     { Para a passagem de parâmetros principalmente das "configuraçoẽs" e metadados de uma requisição ou de sua resposta. }
