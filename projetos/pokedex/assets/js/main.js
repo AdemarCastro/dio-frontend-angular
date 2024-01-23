@@ -1,6 +1,7 @@
-const offset = 0;
-const limit = 20;
-const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
+const pokemonList = document.getElementById('pokemonList');
+const loadMoreButton = document.getElementById('loadMoreButton');
+const limit = 5;
+let offset = 0;
 
 function convertPokemonTypesToLi(pokemonTypes) {
     return pokemonTypes.map((typeSlot) => `<li class="type">${typeSlot.type.name}</li>`)
@@ -12,27 +13,48 @@ function firstCharacterCapitalized(pokemon) {
     return pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
 }
 
-function convertPokemonToLi(pokemon) {
-    return `
-        <li class="pokemon ${pokemon.type}">
-            <span class="number">#${pokemon.number}</span>
-            <span class="name">${firstCharacterCapitalized(pokemon)}</span>
+function loadPokemonItens(offset, limit) {
+    // function convertPokemonToLi(pokemon) {
+    //     return `
+    //     <li class="pokemon ${pokemon.type}">
+    //         <span class="number">#${pokemon.number}</span>
+    //         <span class="name">${firstCharacterCapitalized(pokemon)}</span>
+    //
+    //         <div class="detail">
+    //             <ol class="types">
+    //                 ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
+    //             </ol>
+    //
+    //             <img src="${pokemon.photo}" alt="${firstCharacterCapitalized(pokemon)}">
+    //         </div>
+    //     </li>
+    // `
+    // }
 
-            <div class="detail">
-                <ol class="types">
-                    ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
-                </ol>
-
-                <img src="${pokemon.photo}" alt="${firstCharacterCapitalized(pokemon)}">
-            </div>
-        </li>
-    `
+    pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
+        const newHtml = pokemons.map((pokemon) => `
+           <li class="pokemon ${pokemon.type}">
+                <span class="number">#${pokemon.number}</span>
+                <span class="name">${firstCharacterCapitalized(pokemon)}</span>
+    
+                <div class="detail">
+                    <ol class="types">
+                        ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
+                    </ol>
+    
+                    <img src="${pokemon.photo}" alt="${firstCharacterCapitalized(pokemon)}">
+                </div>
+           </li>
+        `).join('')
+        pokemonList.innerHTML += newHtml;
+    });
 }
 
-const pokemonList = document.getElementById('pokemonList');
+loadPokemonItens(offset, limit)
 
-pokeApi.getPokemons().then((pokemons = []) => {
-    pokemonList.innerHTML += pokemons.map(convertPokemonToLi).join('');
+loadMoreButton.addEventListener('click', () => {
+    offset += limit;
+    loadPokemonItens(offset, limit);
 })
 
 // O que é Promise -> Uma Promise (promessa) é um objeto em JavaScript que representa a eventual conclusão ou falha de uma operação assíncrona.
